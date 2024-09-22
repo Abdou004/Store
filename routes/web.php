@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Editor\EditorController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +29,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    /* Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -35,20 +36,15 @@ Route::middleware('auth')->group(function () {
 });
 //ADMIN
 Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin_dashboard');
 
     Route::resource('product', ProductController::class);
     Route::resource('category', CategoryController::class);
-
-    Route::get('/admin/dashboard',function (){
-        return 'Hay Administrator';
-    })->name('admin_dashboard');
 });
 
 Route::middleware(['editor'])->group(function () {
 
-    Route::get('/editor/dashboard',function (){
-        return 'Hay Editor';
-    })->name('editor_dashboard');
+    Route::get('/editor/dashboard', [EditorController::class, 'index'])->name('editor_dashboard');
 });
 
 

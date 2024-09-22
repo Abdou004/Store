@@ -16,15 +16,9 @@ class EditorAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth()->check()) {
-            $user = Auth::user();
-            if ($user->isAdmin()){
-                return redirect(route('admin_dashboard'));
-
-            }else if($user->isEditor()){
+        if (Auth()->check() && Auth::user()->isEditor()) {
                 return $next($request);
             }
-        }
         abort('403');
     }
 }

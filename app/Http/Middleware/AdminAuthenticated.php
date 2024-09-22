@@ -16,13 +16,8 @@ class AdminAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth()->check()) {
-            $user = Auth::user();
-            if ($user->isAdmin()){
-                return $next($request);
-            }else{
-                return redirect(route('editor_dashboard'));
-            }
+        if (Auth()->check() && Auth::user()->isAdmin()) {
+            return $next($request);
         }
         abort('403');
     }
