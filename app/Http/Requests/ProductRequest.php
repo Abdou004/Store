@@ -23,13 +23,13 @@ class ProductRequest extends FormRequest
     {
         $rules =[
             'name' => 'required|min:5',
-            'description' => 'required|min:50',
+            'description' => 'required|min:5',
             'quantity' => 'required| numeric',
             'price' => 'required| numeric',
             'category_id' => 'required|numeric',
         ];
         if ($this->isMethod('post')) {
-            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048';
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000';
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             // 'put' or 'patch' indicates an update request
             $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048';

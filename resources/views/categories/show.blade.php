@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('title' , 'Categorys')
+@extends('users.admin.app')
+@section('title' , $category->name)
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">

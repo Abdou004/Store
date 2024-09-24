@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title> @yield('title') | {{config('app.name')}}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -70,26 +70,37 @@
                 </div>
             </div>
         </nav>
-    @if ($errors->any())
-        <div class="alert alert-danger" role="alert">
-            <strong>Errors</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
     <div id="app" class="container">
 
+
+
         <main class="py-4">
-            @yield('content')
+            <div class="row">
+                @hasSection('side_bar')
+                <div class="col-3">@yield('side_bar')</div>
+                <div class="col-8">
+                @endif
+                    <div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Errors</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{$error}}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                    </div>
+                    @yield('content')</div>
+            </div>
         </main>
     </div>
+
 </body>
 </html>
