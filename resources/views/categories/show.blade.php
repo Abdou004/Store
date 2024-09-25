@@ -36,11 +36,11 @@
                        <a class="btn btn-primary me-2" href="{{route('product.edit',$product->id)}}" type="button">Update</a>
                        <form action="{{route('product.destroy',$product->id)}}" method="post" >
                            @csrf
-                           <button class="btn btn-danger">Delete</button></th>
+                           <button class="btn btn-danger">Delete</button>
                            @method('DELETE')
                        </form>
-
                 </div>
+                </th>
             </tr>
             @empty
             <tr>

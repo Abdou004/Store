@@ -26,9 +26,10 @@
                 <a class="btn btn-primary" href="{{route('category.edit',$category->id)}}" type="button">Update</a>
                 <form action="{{route('category.destroy',$category->id)}}" method="post" style="display: inline;">
                     @csrf
-                    <button class="btn btn-danger">Delete</button></th>
+                    <button class="btn btn-danger">Delete</button>
                     @method('DELETE')
                 </form>
+                </th>
 
             </tr>
             @empty

@@ -40,7 +40,8 @@
             <select name="category_id" id="category_id" class="form-select">
                 <option value="">Select Category...</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" @selected(old('category_id', $product->category_id))>
+                    <option value="{{ $category->id }}"
+                        @if (old('category_id', $product->category_id) == $category->id) selected @endif>
                         {{ $category->name }}
                     </option>
                 @endforeach

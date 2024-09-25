@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
@@ -12,10 +13,24 @@ class StoreController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::query()->orderBy('created_at','desc')->paginate();
-        return view('store.index',compact('products',));
+        $productsQuery = Product::query();
+        $categories = Category::with('products')->has('products')->get();
+
+        $category =($request->input('category_id'));
+        if (!empty($category)) {
+            $productsQuery->where('category_id', 'like', '%' .$category .'%');
+        }
+        $name = ($request->input('name'));
+        if (!empty($name)) {
+            $productsQuery->where(function ($query) use ($name) {
+                $query->where('name', 'like', '%' . $name . '%')
+                    ->orWhere('description', 'like', '%' . $name . '%');
+            });
+        }
+        $products = $productsQuery->latest()->get();
+        return view('store.index',compact('products',"categories"));
     }
 
     /**
