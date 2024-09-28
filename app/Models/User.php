@@ -52,10 +52,11 @@ class User extends Authenticatable
     {
         return $this->getAttribute('role') == 'admin';
     }
-    public function isEditor(): bool
+  /*  public function isEditor(): bool
     {
-        return $this->getAttribute('role') == 'editor';
+        return $this->getAttribute('role') == 'user';
     }
+  */
     public function isUser(): bool
     {
         return $this->getAttribute('role') == 'user';
@@ -63,8 +64,8 @@ class User extends Authenticatable
 
     public function getRedirectRoute()
     {
-        if ($this->isEditor()){
-            return ('editor_dashboard');
+        if ($this->isUser()){
+            return ('user_dashboard');
         }elseif ($this->isAdmin()){
             return ('admin_dashboard');
         }

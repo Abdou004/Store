@@ -15,8 +15,8 @@ class StoreController extends Controller
      */
     public function index(Request $request)
     {
-        $productsQuery = Product::query();
-        $categories = Category::with('products')->has('products')->get();
+        $productsQuery = Product::with('category');
+        $categories = Category::has('products')->get();
 
         $category =($request->input('category_id'));
         if (!empty($category)) {
@@ -29,69 +29,21 @@ class StoreController extends Controller
                     ->orWhere('description', 'like', '%' . $name . '%');
             });
         }
-        $products = $productsQuery->latest()->get();
-        return view('store.index',compact('products',"categories"));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('product.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ProductRequest $request)
-    {
-        $FormFileds = $request->validated();
-
-        if ($request->hasFile('image')) {
-            $FormFileds['image'] = $request->file('image')->store('product','public');
+        $max = ($request->input('max'));
+        if (!empty($max)) {
+            $productsQuery->where('price', '<=', $max);
         }
-        Product::create($FormFileds);
-
-        return to_route('product.index')->with('success','Your Product has successfuly added !');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-
+        $min = ($request->input('min'));
+        if (!empty($min)) {
+            $productsQuery->where('price', '>=', $min);
+        }
+        $products = $productsQuery->latest()->get();
+        return view('store.index',compact('products','categories'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
-    {
-        return view('product.edit',compact('product'));
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ProductRequest $request, Product $product)
-    {
-        $FormFields = $request->Validated();
-        if ($request->hasFile('image')) {
-            $FormFields['image'] = $request->file('image')->store('product','public');
-        }
-        $product->update($FormFields);
-        return to_route('product.index')->with('success','Your product has updated successfuly !');
-    }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        $product->delete();
-        return to_route('product.index')->with('success' ,'Product deleted Successfuly !');
-
-
-    }
 }

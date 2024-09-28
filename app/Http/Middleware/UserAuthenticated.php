@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditorAuthenticated
+class UserAuthenticated
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class EditorAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth()->check() && Auth::user()->isEditor()) {
+        if (Auth()->check() && Auth::user()->isUser()) {
                 return $next($request);
             }
         abort('403');

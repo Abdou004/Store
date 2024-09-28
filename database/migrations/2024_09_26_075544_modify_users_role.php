@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['user','user','admin']);
+            // Change the 'role' column to allow only 'user' and 'admin'
+            $table->enum('role', ['user', 'admin'])->change();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+            // Revert the column to the previous state
+            $table->enum('role', ['user', 'user', 'admin'])->change();
         });
     }
+
 };

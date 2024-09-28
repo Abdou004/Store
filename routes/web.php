@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Editor\EditorController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,9 +42,9 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('category', CategoryController::class);
 });
 
-Route::middleware(['editor'])->group(function () {
+Route::middleware(['user'])->group(function () {
 
-    Route::get('/editor/dashboard', [EditorController::class, 'index'])->name('editor_dashboard');
+    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user_dashboard');
 });
 
 

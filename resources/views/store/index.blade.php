@@ -19,7 +19,13 @@
                 @endforeach
             </select>
         </div>
-
+        <h3>Pricing</h3>
+        <div class="form-group">
+            <label for="name">Min</label>
+            <input type="number" name="min" id="min" class="form-control" value="{{Request::input('min')}}">
+            <label for="name">Max</label>
+            <input type="number" name="max" id="max" class="form-control" value="{{Request::input('max')}}">
+        </div>
         <div class="form-group">
             <input type="submit" class="btn btn-outline-primary " value="Filer" placeholder="" >
             <button type="button" class="btn btn-outline-secondary" id="resetButton" value="Reset">Reset</button>
@@ -54,7 +60,7 @@
         <div class="card-footer d-flex justify-content-between">
             <span class="badge bg-success">Q : {{$product->quantity}}</span>
             <span class="badge bg-primary"> MAD {{$product->price}} </span>
-            <span class="badge bg-info">{{$product->Category->name}}</span>
+            <span class="badge bg-info">{{$product->category->name}}</span>
         </div>
         <div class="my-2 mx-auto">
             <small class="text-muted">{{$product->updated_at->format('m/y')}}</small>
